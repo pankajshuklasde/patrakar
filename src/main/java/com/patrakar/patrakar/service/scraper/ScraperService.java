@@ -20,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ScraperService {
@@ -37,10 +38,14 @@ public class ScraperService {
 
     public List<String> testScrape(List<String> rawText,String query){
         List<String> summarized=new ArrayList<>();
-        String instruction="extract relevant infomration related to the "+query+" and summarize in not more then 200 words only";
-        rawText.forEach(text->{
-            summarized.add(getResponse(text,instruction));
-        });
+        String instruction=" <INST> extract relevant infomration related to the "+query+" and explain in not more then 100 words . Always start by referencing the site name and explain the information like news anchor. If information is not available simply print NA . don't print anything else apart from NA in case relevant information is not there. Don't try to generate information by yourself </INST>";
+        for (String text : rawText) {
+            summarized.add(getResponse(text, instruction));
+        }
+        String filterInstruction="<INST> If the data contains information related to "+query+" then just print yes else print no . Always print either yes or no </INST>";
+        summarized=summarized.stream()
+                .filter(s-> (getResponse(s,filterInstruction).equalsIgnoreCase("yes")))
+                .collect(Collectors.toList());
         return summarized;
     }
     
