@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("/test")
 public class TestController {
     @Autowired
     BrowserService browserService;
@@ -18,10 +18,9 @@ public class TestController {
     @Autowired
     ScraperService scraperService;
 
-    @GetMapping("/test")
+    @GetMapping("/test-bedrock")
     public ResponseEntity<List<String>> test(@RequestParam("query") String query){
-        return ResponseEntity.ok(browserService.extractData(query));
-//        List<String> text=browserService.testService();
-//        return ResponseEntity.ok(scraperService.testScrape(new ArrayList<>()));
+
+        return ResponseEntity.ok(scraperService.testScrape(browserService.extractData(query),query));
     }
 }

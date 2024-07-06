@@ -1,5 +1,6 @@
 package com.patrakar.patrakar.service.browser;
 
+import jakarta.annotation.PreDestroy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -13,11 +14,23 @@ import java.util.List;
 
 @Service
 public class BrowserService {
+    private final RemoteWebDriver webDriver;
 
-    public List<String> getSiteLinks(String query){
+    public BrowserService() {
         FirefoxOptions firefoxOptions=new FirefoxOptions();
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.DEBUG);
         RemoteWebDriver webDriver=new RemoteWebDriver(firefoxOptions);
+        this.webDriver = webDriver;
+    }
+
+    @PreDestroy
+    private void disconnectDrive(){
+        System.out.println("destroying connection");
+        webDriver.quit();
+    }
+
+
+    public List<String> getSiteLinks(String query){
         webDriver.get("https://google.com/search?q="+query+"&tbm=nws&num=50&tbs=qdr:d");
         List<WebElement> webElements=webDriver.findElements(By.id("search"));
         List<String> siteLinks=webElements.stream()
