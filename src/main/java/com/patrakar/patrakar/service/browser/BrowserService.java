@@ -50,14 +50,9 @@ public class BrowserService {
     }
 
     public String getContext(String siteLink){
-        FirefoxOptions firefoxOptions=new FirefoxOptions();
-        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.DEBUG);
-        RemoteWebDriver webDriver=new RemoteWebDriver(firefoxOptions);
         webDriver.get(siteLink);
         WebElement webElement=webDriver.findElement(By.tagName("body"));
-        String data= webElement.getText();
-        webDriver.quit();
-        return data;
+        return webElement.getText();
     }
 
 }

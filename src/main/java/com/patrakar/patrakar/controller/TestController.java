@@ -20,7 +20,6 @@ public class TestController {
 
     @GetMapping("/test-bedrock")
     public ResponseEntity<List<String>> test(@RequestParam("query") String query){
-
         return ResponseEntity.ok(scraperService.testScrape(browserService.extractData(query),query));
     }
 }
