@@ -1,5 +1,6 @@
 package com.patrakar.patrakar.model.repository;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 public class Topic {
     @Id
     private String id;

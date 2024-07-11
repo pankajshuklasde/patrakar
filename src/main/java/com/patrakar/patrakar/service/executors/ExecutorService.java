@@ -1,11 +1,14 @@
 package com.patrakar.patrakar.service.executors;
 
 import com.patrakar.patrakar.model.repository.Topic;
+import com.patrakar.patrakar.model.repository.TopicData;
 import com.patrakar.patrakar.service.llm.LlmService;
 import com.patrakar.patrakar.service.scraper.ScraperService;
 import com.patrakar.patrakar.service.search.SearchService;
 import com.patrakar.patrakar.service.summarize.SummarizerService;
 import com.patrakar.patrakar.service.topic.TopicService;
+import com.patrakar.patrakar.service.topicBrief.TopicBriefService;
+import com.patrakar.patrakar.service.topicData.TopicDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +29,15 @@ public class ExecutorService {
     LlmService llmService;
 
     @Autowired
+    TopicDataService topicDataService;
+
+    @Autowired
+    TopicBriefService topicBriefService;
+
+    @Autowired
     SummarizerService summarizerService;
 
-    private void runCollector(){
+    public void runCollector(){
         // get all topics
         List<Topic> topics=topicService.getAllTopics();
         for(Topic topic: topics){
@@ -39,13 +48,22 @@ public class ExecutorService {
                 // scrape data
                 String data=scraperService.scrapeData(link);
                 // is not relevant data then skip
-                if(!isRelevantData(data)) continue;
+                if(!isRelevantData(data,topic)) continue;
                 // summarize relevant data
-                String summarizedData= summarizerService.summarizeData(data);
+                String summarizedData= summarizerService.summarizeData(data,topic);
                 // save the data
-                // check next link .
+                topicDataService.save(TopicData.builder()
+                        .topicId(topic.getId())
+                        .data(summarizedData)
+                        .link(link)
+                        .build());
             }
         }
+    }
+
+    private boolean isRelevantData(String data,Topic topic) {
+        String filterInstruction="<INST> If the data contains information related to "+topic.getText()+" then just print yes else print no . Always print either yes or no </INST>";
+        return llmService.getResponse(data+" "+filterInstruction).toLowerCase().contains("yes");
     }
 
 }

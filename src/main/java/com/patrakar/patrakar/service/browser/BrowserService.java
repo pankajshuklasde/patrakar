@@ -40,6 +40,17 @@ public class BrowserService {
         return siteLinks;
     }
 
+    public List<String>getLinksFromUrl(String url){
+        webDriver.get(url);
+        List<WebElement> webElements=webDriver.findElements(By.id("search"));
+        List<String> siteLinks=webElements.stream()
+                .map(webElement -> webElement.findElements(By.tagName("a")))
+                .flatMap(Collection::stream)
+                .map(webElement -> webElement.getAttribute("href"))
+                .toList();
+        return siteLinks;
+    }
+
     public List<String> extractData(String query){
      List<String> siteLinks=getSiteLinks(query);
      List<String> siteData=new ArrayList<>();
