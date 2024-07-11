@@ -21,7 +21,7 @@ public class LlmService {
     @Autowired
     DialougeRepository dialougeRepository;
 
-    public LlmService(BedrockRuntimeClient bedrockClient, String modelId) {
+    public LlmService() {
         this.bedrockClient= BedrockRuntimeClient.builder()
                 .region(Region.US_EAST_1)
                 .credentialsProvider(DefaultCredentialsProvider.create()).build();
