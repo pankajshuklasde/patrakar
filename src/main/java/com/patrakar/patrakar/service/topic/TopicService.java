@@ -24,4 +24,8 @@ public class TopicService {
                         .build()
         );
     }
+
+    public void save(Topic topic) {
+        topicRepository.save(topic);
+    }
 }

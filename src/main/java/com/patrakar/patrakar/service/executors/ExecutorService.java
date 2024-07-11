@@ -12,6 +12,7 @@ import com.patrakar.patrakar.service.topicData.TopicDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class ExecutorService {
     @Autowired
     SummarizerService summarizerService;
 
-    public void runCollector(){
+    public void runCollector() throws InterruptedException {
         // get all topics
         List<Topic> topics=topicService.getAllTopics();
         for(Topic topic: topics){
@@ -47,6 +48,7 @@ public class ExecutorService {
             for(String link:links){
                 // scrape data
                 String data=scraperService.scrapeData(link);
+                Thread.sleep(Duration.ofSeconds(5));
                 // is not relevant data then skip
                 if(!isRelevantData(data,topic)) continue;
                 // summarize relevant data
@@ -57,6 +59,8 @@ public class ExecutorService {
                         .data(summarizedData)
                         .link(link)
                         .build());
+                topic.getVisitedLinks().add(link);
+                topicService.save(topic);
             }
         }
     }

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Objects;
 
-@RestController("/topic")
+@RestController
+@RequestMapping("/topic")
 public class TopicController {
 
     @Autowired
@@ -19,12 +20,12 @@ public class TopicController {
     @Autowired
     ExecutorService executorService;
 
-    @GetMapping
-    public ResponseEntity<String> test(){
+    @GetMapping()
+    public ResponseEntity<String> test() throws InterruptedException {
         executorService.runCollector();
         return ResponseEntity.ok("good");
     }
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Topic> addTopic(@RequestBody HashMap<String, Object> body){
         return ResponseEntity.ok(topicService.createTopic((String) body.get("topic")));
     }
