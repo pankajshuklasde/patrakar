@@ -28,4 +28,8 @@ public class TopicService {
     public void save(Topic topic) {
         topicRepository.save(topic);
     }
+
+    public Topic getTopicById(String topicId) {
+        return topicRepository.findById(topicId).orElse(null);
+    }
 }

@@ -1,7 +1,11 @@
 package com.patrakar.patrakar.service.executors;
 
 import com.patrakar.patrakar.model.repository.Topic;
+import com.patrakar.patrakar.model.repository.TopicBrief;
 import com.patrakar.patrakar.model.repository.TopicData;
+import com.patrakar.patrakar.model.repository.dto.NewsItemDto;
+import com.patrakar.patrakar.model.repository.dto.NewsLetterDto;
+import com.patrakar.patrakar.service.aws.AwsSesService;
 import com.patrakar.patrakar.service.llm.LlmService;
 import com.patrakar.patrakar.service.scraper.ScraperService;
 import com.patrakar.patrakar.service.search.SearchService;
@@ -13,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +43,9 @@ public class ExecutorService {
 
     @Autowired
     SummarizerService summarizerService;
+
+    @Autowired
+    AwsSesService awsSesService;
 
     public void runCollector() throws InterruptedException {
         // get all topics
@@ -65,9 +74,33 @@ public class ExecutorService {
         }
     }
 
+    public void runBriefer(){
+       List<TopicBrief> topicBriefs= topicBriefService.generateBriefs(topicService.getAllTopics());
+       NewsLetterDto newsLetter=NewsLetterDto.builder().newsItemDto(
+               topicBriefs.stream().map(this::creatNewsItem).collect(Collectors.toList())
+       ).build();
+       awsSesService.sendEmail(
+               "tech@mstack.in",
+               "pankaj@mstack.in",
+               "Mstack news letter "+LocalDate.now(ZoneId.of("Asia/Kolkata")),
+               newsLetter.asHtml(),
+               null
+       );
+    }
+
+    private NewsItemDto creatNewsItem(TopicBrief topicBrief) {
+        return NewsItemDto.builder()
+                .summary(topicBrief.getBrief())
+                .topic(topicService.getTopicById(topicBrief.getTopicId()).getText())
+                .topicNews(topicDataService.findAllByIds(topicBrief.getTopicDataIds()).stream().map(TopicData::getData)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+
     private boolean isRelevantData(String data,Topic topic) {
         String filterInstruction="<INST> If the data contains information related to "+topic.getText()+" then just print yes else print no . Always print either yes or no </INST>";
-        return llmService.getResponse(data+" "+filterInstruction).toLowerCase().contains("yes");
+        return llmService.getResponse(data+" "+filterInstruction).equalsIgnoreCase("yes");
     }
 
 }
