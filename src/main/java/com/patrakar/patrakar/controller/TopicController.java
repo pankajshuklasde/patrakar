@@ -18,14 +18,6 @@ public class TopicController {
     @Autowired
     TopicService topicService;
 
-    @Autowired
-    ExecutorService executorService;
-
-    @GetMapping
-    public ResponseEntity<String> test() throws InterruptedException {
-        executorService.runBriefer();
-        return ResponseEntity.ok("good");
-    }
     @PostMapping
     public ResponseEntity<Topic> addTopic(@RequestBody Topic topic){
         return ResponseEntity.ok(topicService.createTopic(topic));
@@ -34,4 +26,5 @@ public class TopicController {
     public ResponseEntity<List<Topic>> addAllTopcis(@RequestBody List<Topic> topics){
         return ResponseEntity.ok(topicService.addAll(topics));
     }
+
  }

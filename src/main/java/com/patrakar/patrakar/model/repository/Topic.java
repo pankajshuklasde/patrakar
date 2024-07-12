@@ -20,7 +20,6 @@ public class Topic {
     private String mainTopic;
     @NonNull
     private List<String> subTopics;
-    @NonNull
     private List<String> visitedLinks;
     @CreatedDate
     private LocalDateTime createdAt;
