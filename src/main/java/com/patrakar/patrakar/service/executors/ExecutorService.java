@@ -89,12 +89,13 @@ public class ExecutorService {
     }
 
     private NewsItemDto creatNewsItem(TopicBrief topicBrief) {
-        return NewsItemDto.builder()
+        NewsItemDto itemDto= NewsItemDto.builder()
                 .summary(topicBrief.getBrief())
                 .topic(topicService.getTopicById(topicBrief.getTopicId()).getText())
                 .topicNews(topicDataService.findAllByIds(topicBrief.getTopicDataIds()).stream().map(TopicData::getData)
                         .collect(Collectors.toList()))
                 .build();
+        return itemDto;
     }
 
 

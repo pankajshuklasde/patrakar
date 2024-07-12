@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface TopicDataRepository extends MongoRepository<TopicData, String> {
-    @Query("{ 'topicId' ?0 } ")
+    @Query("{ 'topicId': ?0 } ")
     List<TopicData> findAllTopicDataByTopicId(String id);
 }

@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.Query;
 import java.time.LocalDate;
 
 public interface TopicBriefRepository extends MongoRepository<TopicBrief, String> {
-    @Query("{ 'topicId' ?0 , 'from':?1,'to':?2 } ")
+    @Query("{ 'topicId':?0 , 'from':?1,'to':?2 } ")
     TopicBrief findBriefByTopicIdAndDateRange(String id, LocalDate from, LocalDate to);
 }

@@ -72,6 +72,7 @@ public class NewsLetterDto {
                 "        </div>");
         newsItemDto.forEach(item->{
             htmlBuilder.append(generateItemHtml(item));
+
         });
         htmlBuilder.append("<div class=\"footer\">\n" +
                 "            <p>&copy; 2024 Mstack News Letter. All rights reserved.</p>\n" +
@@ -91,7 +92,7 @@ public class NewsLetterDto {
         item.getTopicNews().forEach(news->{
             html.append("<li>").append(news).append("</li>");
         });
-        html.append("<p>").append(item.getSummary()).append("</p>");
+        html.append("<p> Summary: ").append(item.getSummary()).append("</p>");
         html.append("</div>");
         return html.toString();
     }

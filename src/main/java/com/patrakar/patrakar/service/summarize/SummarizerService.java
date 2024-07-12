@@ -14,7 +14,7 @@ public class SummarizerService {
     @Autowired
     LlmService llmService;
     public String summarizeData(String data, Topic topic) {
-        String instruction=" <INST> extract relevant infomration related to the "+topic.getText()+" and explain in not more then 100 words . Always start by referencing the site name and explain the information like news anchor. Don't try to generate information by yourself </INST>";
+        String instruction=" <INST> extract relevant infomration related to the "+topic.getText()+" and explain in not more then 50 words . Always start by referencing the site name and explain the information like news anchor. Don't try to generate information by yourself </INST>";
         return llmService.getResponse(data + "  "+instruction);
     }
 

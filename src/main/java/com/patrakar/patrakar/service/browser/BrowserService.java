@@ -56,7 +56,9 @@ public class BrowserService {
      List<String> siteData=new ArrayList<>();
         for (String link : siteLinks) {
             try{
-                siteData.add(getContext(link));
+                String context=getContext(link);
+                if(context.isEmpty()|| context.isBlank()) continue;
+                siteData.add(context);
             }catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
@@ -66,11 +68,17 @@ public class BrowserService {
     }
 
     public String getContext(String siteLink){
-        System.out.println("getting context for "+siteLink);
-        webDriver.get(siteLink);
-        WebElement webElement=webDriver.findElement(By.tagName("body"));
-        System.out.println("returing context ");
-        return webElement.getText();
+        try{
+            System.out.println("getting context for "+siteLink);
+            webDriver.get(siteLink);
+            WebElement webElement=webDriver.findElement(By.tagName("body"));
+            System.out.println("returing context ");
+            return webElement.getText();
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return "";
+        }
+
     }
 
 }

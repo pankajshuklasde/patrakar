@@ -36,7 +36,6 @@ public class TopicBriefService {
     }
 
     TopicBrief generateBrief(Topic topic){
-
         LocalDate to=LocalDate.now();
         LocalDate from=to.minusDays(7);
         // check if breif is present
@@ -50,7 +49,7 @@ public class TopicBriefService {
                 .collect(Collectors.toList());
         return topicBriefRepository.save(TopicBrief.builder()
                 .topicId(topic.getId())
-                .topicDataIds(topicDatas.stream().map(TopicData::getTopicId).collect(Collectors.toList()))
+                .topicDataIds(topicDatas.stream().map(TopicData::getId).collect(Collectors.toList()))
                 .brief(summarizerService.generateBriefSummary(topicDatas))
                 .from(from)
                 .to(to)

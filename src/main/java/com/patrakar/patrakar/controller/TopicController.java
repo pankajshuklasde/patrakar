@@ -20,12 +20,13 @@ public class TopicController {
     @Autowired
     ExecutorService executorService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<String> test() throws InterruptedException {
         executorService.runCollector();
+        executorService.runBriefer();
         return ResponseEntity.ok("good");
     }
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Topic> addTopic(@RequestBody HashMap<String, Object> body){
         return ResponseEntity.ok(topicService.createTopic((String) body.get("topic")));
     }
