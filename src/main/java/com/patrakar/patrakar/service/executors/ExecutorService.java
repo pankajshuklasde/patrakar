@@ -91,7 +91,7 @@ public class ExecutorService {
     private NewsItemDto creatNewsItem(TopicBrief topicBrief) {
         NewsItemDto itemDto= NewsItemDto.builder()
                 .summary(topicBrief.getBrief())
-                .topic(topicService.getTopicById(topicBrief.getTopicId()).getText())
+                .topic(topicService.getTopicById(topicBrief.getTopicId()).getMainTopic())
                 .topicNews(topicDataService.findAllByIds(topicBrief.getTopicDataIds()).stream().map(TopicData::getData)
                         .collect(Collectors.toList()))
                 .build();
@@ -100,7 +100,7 @@ public class ExecutorService {
 
 
     private boolean isRelevantData(String data,Topic topic) {
-        String filterInstruction="<INST> If the data contains information related to "+topic.getText()+" then just print yes else print no . Always print either yes or no </INST>";
+        String filterInstruction="<INST> If the data contains information related to "+topic.getMainTopic()+" then just print yes else print no . Always print either yes or no </INST>";
         return llmService.getResponse(data+" "+filterInstruction).equalsIgnoreCase("yes");
     }
 

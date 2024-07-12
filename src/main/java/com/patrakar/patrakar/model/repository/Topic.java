@@ -2,7 +2,6 @@ package com.patrakar.patrakar.model.repository;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +14,7 @@ import java.util.List;
 public class Topic {
     @Id
     private String id;
-    private String text;
+    private String mainTopic;
     private List<String> subTopics;
     private List<String> visitedLinks;
     @CreatedDate

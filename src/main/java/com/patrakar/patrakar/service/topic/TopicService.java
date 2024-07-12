@@ -17,6 +17,7 @@ public class TopicService {
     }
 
     public Topic createTopic(Topic topic){
+        topic.setVisitedLinks(new ArrayList<>());
         return topicRepository.save(
                 topic
         );
