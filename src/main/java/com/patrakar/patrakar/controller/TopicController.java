@@ -26,7 +26,7 @@ public class TopicController {
         return ResponseEntity.ok("good");
     }
     @PostMapping
-    public ResponseEntity<Topic> addTopic(@RequestBody HashMap<String, Object> body){
-        return ResponseEntity.ok(topicService.createTopic((String) body.get("topic")));
+    public ResponseEntity<Topic> addTopic(@RequestBody Topic topic){
+        return ResponseEntity.ok(topicService.createTopic(topic));
     }
 }

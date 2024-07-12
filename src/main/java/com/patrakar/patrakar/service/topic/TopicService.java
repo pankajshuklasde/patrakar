@@ -16,12 +16,9 @@ public class TopicService {
         return topicRepository.findAll();
     }
 
-    public Topic createTopic(String text){
+    public Topic createTopic(Topic topic){
         return topicRepository.save(
-                Topic.builder()
-                        .text(text)
-                        .visitedLinks(new ArrayList<>())
-                        .build()
+                topic
         );
     }
 
