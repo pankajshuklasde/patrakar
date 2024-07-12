@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -29,4 +30,8 @@ public class TopicController {
     public ResponseEntity<Topic> addTopic(@RequestBody Topic topic){
         return ResponseEntity.ok(topicService.createTopic(topic));
     }
-}
+    @PostMapping("/add-all")
+    public ResponseEntity<List<Topic>> addAllTopcis(@RequestBody List<Topic> topics){
+        return ResponseEntity.ok(topicService.addAll(topics));
+    }
+ }

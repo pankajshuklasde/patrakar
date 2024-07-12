@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicService {
@@ -29,5 +30,9 @@ public class TopicService {
 
     public Topic getTopicById(String topicId) {
         return topicRepository.findById(topicId).orElse(null);
+    }
+
+    public List<Topic> addAll(List<Topic> topics) {
+        return topics.stream().map(this::createTopic).collect(Collectors.toList());
     }
 }
