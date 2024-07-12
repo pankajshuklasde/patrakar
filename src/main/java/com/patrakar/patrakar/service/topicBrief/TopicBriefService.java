@@ -45,7 +45,7 @@ public class TopicBriefService {
         List<TopicData> topicDatas=topicDataService.findAllTopicDataByTopicId(topic.getId());
         topicDatas=topicDatas.stream().filter(topicData ->
                         topicData.getCreatedAt().isAfter(from.atStartOfDay()) &&
-                       ( topicData.getCreatedAt().isBefore(to.atStartOfDay())) ||  topicData.getCreatedAt().isEqual(to.atStartOfDay()))
+                       ( topicData.getCreatedAt().isBefore(to.plusDays(1).atStartOfDay())))
                 .collect(Collectors.toList());
         return topicBriefRepository.save(TopicBrief.builder()
                 .topicId(topic.getId())

@@ -22,7 +22,6 @@ public class TopicController {
 
     @GetMapping
     public ResponseEntity<String> test() throws InterruptedException {
-        executorService.runCollector();
         executorService.runBriefer();
         return ResponseEntity.ok("good");
     }
