@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +55,7 @@ public class ExecutorService {
         for(Topic topic: topics){
             // check past 24 news
             List<String> links=searchService.searchTopic(topic);
+            links=removeDuplicates(links);
             links = links.stream().filter(link->!topic.getVisitedLinks().contains(link)).collect(Collectors.toList());
             for(String link:links){
                 // scrape data
@@ -72,6 +75,12 @@ public class ExecutorService {
                 topicService.save(topic);
             }
         }
+    }
+
+    private List<String> removeDuplicates(List<String> links) {
+        if(links.isEmpty()) return new ArrayList<>();
+        HashSet<String> temp = new HashSet<>(links);
+        return temp.stream().toList();
     }
 
     public void runBriefer(){

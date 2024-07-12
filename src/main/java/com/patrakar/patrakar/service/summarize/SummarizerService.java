@@ -19,7 +19,7 @@ public class SummarizerService {
     }
 
     public String generateBriefSummary(List<TopicData> topicDatas) {
-        String instruction="<INST>Generate a brief summary of not more then 100 words from the data. Generate it in a way that you are breifing someone about the updates.</INST>";
+        String instruction="<INST>Generate a concise summary, no longer than 100 words, from the provided data. The summary should directly present the updates without any introductory phrases.</INST>";
         StringBuilder data= new StringBuilder();
         for (TopicData topicData : topicDatas) {
             data.append(" ").append(topicData.getData());
