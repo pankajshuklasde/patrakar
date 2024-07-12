@@ -16,6 +16,7 @@ public class Topic {
     @Id
     private String id;
     private String text;
+    private List<String> subTopics;
     private List<String> visitedLinks;
     @CreatedDate
     private LocalDateTime createdAt;

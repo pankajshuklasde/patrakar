@@ -16,7 +16,9 @@ public class SearchService {
     BrowserService browserService;
 
     public List<String> searchTopic(Topic topic) {
-        return browserService.getLinksFromUrl(getSearchQuery(topic.getText()));
+        List<String> urls= browserService.getLinksFromUrl(getSearchQuery(topic.getText()));
+        topic.getSubTopics().forEach(s -> urls.addAll(browserService.getLinksFromUrl(getSearchQuery(s))));
+        return urls;
     }
 
     private String getSearchQuery(String searchText) {
