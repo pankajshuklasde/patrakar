@@ -24,12 +24,13 @@ public class NewsLetterDto {
                 "            color: #333;\n" +
                 "            margin: 0;\n" +
                 "            padding: 20px;\n" +
+                "            line-height: 1.6;\n" +
                 "        }\n" +
                 "        .container {\n" +
                 "            max-width: 800px;\n" +
                 "            margin: 0 auto;\n" +
                 "            background: #fff;\n" +
-                "            padding: 20px;\n" +
+                "            padding: 30px;\n" +
                 "            border-radius: 8px;\n" +
                 "            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" +
                 "        }\n" +
@@ -41,29 +42,51 @@ public class NewsLetterDto {
                 "            color: #4682b4;\n" +
                 "        }\n" +
                 "        .news-item {\n" +
-                "            margin-bottom: 20px;\n" +
+                "            margin-bottom: 30px;\n" +
                 "            padding: 20px;\n" +
                 "            border-left: 4px solid #4682b4;\n" +
                 "            background: #e6f2ff;\n" +
                 "            border-radius: 8px;\n" +
                 "        }\n" +
                 "        .news-item h2 {\n" +
-                "            margin: 0 0 10px;\n" +
+                "            margin: 0 0 15px;\n" +
                 "            color: #4682b4;\n" +
                 "        }\n" +
                 "        .news-item ul {\n" +
                 "            padding-left: 20px;\n" +
+                "            list-style-type: none;\n" +
+                "        }\n" +
+                "        .news-item ul li {\n" +
+                "            margin-bottom: 10px;\n" +
+                "            padding: 10px;\n" +
+                "            background: #fff;\n" +
+                "            border: 1px solid #ddd;\n" +
+                "            border-radius: 4px;\n" +
+                "            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n" +
+                "            transition: background-color 0.3s, border-color 0.3s;\n" +
+                "        }\n" +
+                "        .news-item ul li:hover {\n" +
+                "            background-color: #f0f8ff;\n" +
+                "            border-color: #4682b4;\n" +
                 "        }\n" +
                 "        .news-item p {\n" +
-                "            margin: 0 0 10px;\n" +
+                "            margin: 15px 0 0;\n" +
+                "            font-family: 'Georgia', serif;\n" +
+                "            font-size: 1.1em;\n" +
+                "            font-weight: bold;\n" +
+                "            color: #555;\n" +
+                "            background: #fff;\n" +
+                "            padding: 10px;\n" +
+                "            border-radius: 4px;\n" +
+                "            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n" +
                 "        }\n" +
                 "        .footer {\n" +
                 "            text-align: center;\n" +
-                "            margin-top: 40px;\n" +
+                "            margin-top: 50px;\n" +
                 "            font-size: 0.9em;\n" +
                 "            color: #555;\n" +
                 "        }\n" +
-                "    </style>\n" +
+                "    </style>"+
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +

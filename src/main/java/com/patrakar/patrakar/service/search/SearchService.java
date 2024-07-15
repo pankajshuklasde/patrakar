@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,8 +18,12 @@ public class SearchService {
     BrowserService browserService;
 
     public List<String> searchTopic(Topic topic) {
-        List<String> urls= browserService.getLinksFromUrl(getSearchQuery(topic.getMainTopic()));
-        topic.getSubTopics().forEach(s -> urls.addAll(browserService.getLinksFromUrl(getSearchQuery(s))));
+        List<String> urls=new ArrayList<>();
+        urls.addAll(browserService.getLinksFromUrl(getSearchQuery(topic.getMainTopic())));
+        for (String s : topic.getSubTopics()) {
+            List<String> subLinks=browserService.getLinksFromUrl(getSearchQuery(s));
+           urls.addAll(subLinks);
+        }
         return urls;
     }
 
